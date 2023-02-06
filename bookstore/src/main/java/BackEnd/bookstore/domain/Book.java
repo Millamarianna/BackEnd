@@ -1,10 +1,24 @@
 package BackEnd.bookstore.domain;
 
-public class Book {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-	String title, author;
-	int publicationYear, isbn;
-	double price;
+@Entity
+public class Book {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	private String title, author;
+	private int publicationYear, isbn;
+	private double price;
+	
+	public Book() {
+		super();
+	}
 	
 	public Book(String title, String author, int publicationYear, int isbn, double price) {
 		super();
@@ -15,6 +29,13 @@ public class Book {
 		this.price = price;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
