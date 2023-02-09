@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>new owner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Add a category</h1>
+	<div>
+	<form action="#" th:object="${category}" th:action="@{saveCategory}" method="post">
+		<div>
+		<label for="category">Category</label>
+		<input type="text" id="category" th:field="*{name}" />
+		<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+		</div>
+			<input type="submit" value="Save"></input>
+		</form>
+	
+	</div>
+
+ 	
+</body>
+</html>

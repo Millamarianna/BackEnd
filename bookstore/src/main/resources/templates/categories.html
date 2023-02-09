@@ -1,13 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Book list</title>
+    <title>Categories</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>This is the main page</h1>
-    <a href="books">Go to book listing</a>
+	<h1>Categories</h1>
+    <table>
+		<tr>
+		    <th>Category name</th>
+		</tr>  
+    	<tr th:each = "category : ${categories}">
+    		<td th:text="${category.name}"></td>
+    	</tr>
+     </table>
+     <a href="/addCategory">Add new</a>
      
 </body>
 </html>

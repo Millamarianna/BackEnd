@@ -3,6 +3,7 @@
 <head>
     <title>Edit</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
 	<h1>Edit book</h1>
@@ -21,6 +22,10 @@
 		  	<label for="publicationYear">Year</label>
 			<input type="text" id="publicationYear" th:field="*{publicationYear}" />
 			</div>
+			<label for="category">Category</label>
+			<select id="category" th:field="*{category}" class="form-control">
+			<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+			</select>
 			<div>
 		  	<label for="isbn">Isbn</label>
 			<input type="text" id="isbn" th:field="*{isbn}" />

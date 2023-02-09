@@ -1,9 +1,14 @@
 package BackEnd.bookstore.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Book {
@@ -11,22 +16,39 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	private String title, author;
+	
+	@NotEmpty(message = "Title cannot be empty.")
+	@Size(min=1, max=250)
+	private String title;
+	private String author;
 	private int publicationYear, isbn;
 	private double price;
 	
-	public Book() {
-		super();
-	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "categoryid")
+	private Category category;
 	
 	public Book(String title, String author, int publicationYear, int isbn, double price) {
 		super();
 		this.title = title;
-		this.author = author;
+		this.author = author; 
 		this.publicationYear = publicationYear;
 		this.isbn = isbn;
 		this.price = price;
+	}
+	
+	public Book(String title, String author, int publicationYear, int isbn, double price, Category category) {
+		super();
+		this.title = title;
+		this.author = author; 
+		this.publicationYear = publicationYear;
+		this.isbn = isbn;
+		this.price = price;
+		this.category = category;
+	}
+	
+	public Book() {
+		super();
 	}
 	
 	public Long getId() {
@@ -67,11 +89,18 @@ public class Book {
 		this.price = price;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear + ", isbn=" + isbn
-				+ ", price=" + price + "]";
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
+				+ ", isbn=" + isbn + ", price=" + price + ", category=" + category + "]";
 	}
-	
 	
 }
