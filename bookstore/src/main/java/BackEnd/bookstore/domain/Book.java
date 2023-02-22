@@ -28,13 +28,8 @@ public class Book {
 	@JoinColumn(name = "categoryid")
 	private Category category;
 	
-	public Book(String title, String author, int publicationYear, int isbn, double price) {
+	public Book() {
 		super();
-		this.title = title;
-		this.author = author; 
-		this.publicationYear = publicationYear;
-		this.isbn = isbn;
-		this.price = price;
 	}
 	
 	public Book(String title, String author, int publicationYear, int isbn, double price, Category category) {
@@ -47,9 +42,22 @@ public class Book {
 		this.category = category;
 	}
 	
-	public Book() {
+	public Book(String title, String author, int publicationYear, int isbn, double price) {
 		super();
+		this.title = title;
+		this.author = author; 
+		this.publicationYear = publicationYear;
+		this.isbn = isbn;
+		this.price = price;
 	}
+	
+	public Book(String title, String author) {
+		super();
+		this.title = title;
+		this.author = author;
+	}
+	
+	
 	
 	public Long getId() {
 		return id;
@@ -102,5 +110,7 @@ public class Book {
 		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
 				+ ", isbn=" + isbn + ", price=" + price + ", category=" + category + "]";
 	}
+
+	
 	
 }
