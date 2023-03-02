@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import BackEnd.bookstore.domain.AppUser;
+import BackEnd.bookstore.domain.AppUserRepository;
 import BackEnd.bookstore.domain.Book;
 import BackEnd.bookstore.domain.BookRepository;
 import BackEnd.bookstore.domain.Category;
@@ -28,7 +30,8 @@ public class BookstoreApplication {
 
 
 	
-	@Bean public CommandLineRunner bookStore(BookRepository bookRepository, CategoryRepository categoryRepository) { 
+	@Bean 
+	public CommandLineRunner bookStore(BookRepository bookRepository, CategoryRepository categoryRepository, AppUserRepository appUserRepository) { 
 		return (args) -> { 
 			log.info("create categories"); 
 			 categoryRepository.save(new Category("Tietokirja"));
@@ -40,7 +43,12 @@ public class BookstoreApplication {
 				bookRepository.save(new Book("Molli ja maan ääri", "Katri Kirkkopelto", 2019, 2345678, 22.90, categoryRepository.findByName("Novelli").get(0))); 
 				bookRepository.save(new Book("Uppo-Nalle ja Kumma", "Elina Karjalainen", 1993, 3456789, 32.50, categoryRepository.findByName("Sanakirja").get(0)));
 			
-			 
+				// Create users: admin/admin user/user
+				AppUser user1 = new AppUser("user", "$2a$10$nO4u6Hk.m/lx43QDbcwhB.PkpTzJsDOhxx.5Ogo//PqPCOPy4RSb6", "useremail@email.com", "USER");
+				AppUser user2 = new AppUser("admin", "$2a$10$Ns.z6cfu7xLYv9rN3ptTOeZdXPq/kzVtRr8/A9QQWX53PkOINoHuW", "adminemail@email.com", "ADMIN");
+				appUserRepository.save(user1);
+				appUserRepository.save(user2);
+				
 			 log.info("print all books"); for (Book book : bookRepository.findAll())
 			 { System.out.println(book.toString()); }
 			 

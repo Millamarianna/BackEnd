@@ -8,11 +8,13 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,6 +47,7 @@ private static final Logger log = LoggerFactory.getLogger(BookController.class);
 		return "books";
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/addBook")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
@@ -52,8 +55,9 @@ private static final Logger log = LoggerFactory.getLogger(BookController.class);
 		return "newBook";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping("/saveBook")
-	public String saveBook(@Valid Book book, BindingResult bindingResult, Model model) {
+	public String saveBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			log.info("error with validation");
 			model.addAttribute("book", book);
@@ -64,12 +68,14 @@ private static final Logger log = LoggerFactory.getLogger(BookController.class);
 		return "redirect:/books";
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/deleteBook/{id}")
 	public String deleteBook(@PathVariable("id") Long id, Model model) {
 		bookRepository.deleteById(id);
 		return "redirect:/books";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/editBook/{id}")
 	public String editBook(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("editBook", bookRepository.findById(id));
@@ -113,7 +119,7 @@ private static final Logger log = LoggerFactory.getLogger(BookController.class);
 	}
 }
 
-	
+	//Jos tekee oman RestBookController.javan:
 	//@GetMapping("/allbooks")
 	//public Iterable<Book> getBooks() { 
 	//	log.info("//fetch and return books");
