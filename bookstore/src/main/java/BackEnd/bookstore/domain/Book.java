@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class Book {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotEmpty(message = "Title cannot be empty.")
